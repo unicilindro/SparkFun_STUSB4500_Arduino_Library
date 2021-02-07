@@ -18,16 +18,16 @@
   https://github.com/sparkfun/SparkFun_STUSB4500_Arduino_Library/blob/master/LICENSE.md
 */
 
-#include "SparkFun_STUSB4500.h"
+#include "SparkFun_STUSB4500_SoftWire.h"
 
 uint8_t sector[5][8];
 uint8_t readSectors = 0;
 
-uint8_t STUSB4500::begin(uint8_t deviceAddress, TwoWire &wirePort)
+uint8_t STUSB4500::begin(SoftWire &softWire, uint8_t deviceAddress)
 {
   readSectors = 0;
   _deviceAddress = deviceAddress; //If provided, store the I2C address from user
-  _i2cPort = &wirePort; //Grab which port the user wants us to use
+  _i2cPort = &softWire; //Grab which port the user wants us to use
 
   _i2cPort->beginTransmission(_deviceAddress);
 

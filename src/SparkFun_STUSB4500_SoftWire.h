@@ -18,8 +18,8 @@
   https://github.com/sparkfun/SparkFun_STUSB4500_Arduino_Library/blob/master/LICENSE.md
 */
 
-#ifndef SPARKFUN_STUSB4500_H
-#define SPARKFUN_STUSB4500_H
+#ifndef SPARKFUN_STUSB4500_SOFTWIRE_H
+#define SPARKFUN_STUSB4500_SOFTWIRE_H
 
 #if (ARDUINO >= 100)
 #include "Arduino.h"
@@ -27,18 +27,18 @@
 #include "WProgram.h"
 #endif
 
-#include <Wire.h>
+#include <SoftWire.h>
 #include "stusb4500_register_map.h"
 
 
 class STUSB4500 {
   public:
   /*
-    Initializes the I2C bus. If the device ID is configured for a address other than the default
-	it should be intialized here. Valid IDs are 0x28 (default), 0x29, 0x2A, and 0x2B. If another
-	I2C bus is used (such as Wire1 or Wire2), it can be defined here as well, the default is Wire.
+    Initializes the I2C bus. It creates Software I2C on pins pinSda and pinScl.
+	If the device ID is configured for a address other than the default
+	it should be intialized here. Valid IDs are 0x28 (default), 0x29, 0x2A, and 0x2B.
   */
-  uint8_t begin(uint8_t deviceAddress = 0x28, TwoWire &wirePort = Wire);
+  uint8_t begin(SoftWire &softWire, uint8_t deviceAddress = 0x28);
   
   /*
     Reads the NVM memory from the STUSB4500
@@ -371,7 +371,7 @@ class STUSB4500 {
   bool readSectors;
 
   //I-squared-C Class
-  TwoWire *_i2cPort; //The generic connection to user's chosen I2C hardware
+  SoftWire *_i2cPort; //The generic connection to user's chosen I2C hardware
   //Variables
   uint8_t _deviceAddress;
   
